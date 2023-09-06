@@ -49,11 +49,37 @@ class Users extends CI_Controller {
         redirect('users');
 	}
 
+    public function delete_user()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') 
+        {
+            $id = htmlspecialchars($this->input->post('id_auth'));
+            if($id != null){
+                $delete = $this->db->delete('auth', array('id_auth' => $id));
+                if ($delete) {
+                    $this->session->set_flashdata('success', 'Data berhasil dihapus.');
+                } else {
+                    $this->session->set_flashdata('error', 'Data gagal dihapus.');
+                }
+            }else{
+                $this->session->set_flashdata('error', 'Data gagal dihapus.');
+            }
+        }
+        redirect('users');
+    }
+
     public function show_role_add(){
         $data['parentMenu'] = $this->get_menu();
 		$data['dataRole'] = $this->get_role();
         $this->load->view('./templates/header', $data);
 		$this->load->view('./manajemen_user/add_role');
+        $this->load->view('./templates/footer');
+    }
+    public function show_user_edit($id){
+        $data['parentMenu'] = $this->get_menu();
+		$data['dataRole'] = $this->get_role();
+        $this->load->view('./templates/header', $data);
+		$this->load->view('./manajemen_user/edit_user');
         $this->load->view('./templates/footer');
     }
 
@@ -96,13 +122,13 @@ class Users extends CI_Controller {
 	}
 
     public function get_user(){
-        $data = $this->db->query("SELECT * FROM auth a JOIN role r ON a.f_id_role=r.id_role;")->result_array();
+        $data = $this->db->query("SELECT * FROM auth a JOIN role r ON a.f_id_role=r.id_role WHERE username!='admin';")->result_array();
 		return $data;
     }
 
     public function count_user()
     {
-        $data_user = $this->db->query("SELECT COUNT(*) AS jumlah_user FROM auth")->row_array();
+        $data_user = $this->db->query("SELECT COUNT(*) AS jumlah_user FROM auth WHERE username!='admin'")->row_array();
         return $data_user['jumlah_user'];
     }
 }

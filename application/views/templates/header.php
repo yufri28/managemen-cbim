@@ -132,7 +132,8 @@
                           <?php if($this->session->userdata('kode_role') == 1): ?>
                           <div class="menu-item py-2">
                               <a class="menu-link <?= $this->uri->segment(1) == 'menu' ? 'active' : '' ?> menu-center"
-                                  href="#" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                                  href="<?=base_url('menu');?>" data-bs-trigger="hover" data-bs-dismiss="click"
+                                  data-bs-placement="right">
                                   <span class="menu-icon me-0">
                                       <i class="bi bi-gear fs-2"></i>
                                   </span>

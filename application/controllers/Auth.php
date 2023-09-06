@@ -48,12 +48,6 @@ class Auth extends CI_Controller {
 		
 	}
 
-	public function logout(){
-		die;
-		$this->session->sess_destroy();
-		redirect(base_url('auth'));		
-	}
-
 	private function add_default_role(){
 		$data = array(
 			'id_role' => 0,

@@ -5,14 +5,14 @@
         <!--begin::Container-->
         <div id="kt_content_container" class="container-xxl">
             <!--begin::Row-->
-            <div class="g-5 gx-xxl-8">
+            <div class="g-5 gx-xxl-10">
                 <!--begin::Tables Widget 10-->
                 <div class="card">
                     <!--begin::Header-->
                     <div class="card-header border-0 pt-5">
                         <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bolder fs-3 mb-1">Pengguna</span>
-                            <span class="text-muted mt-1 fw-bold fs-7"><?=$jumlah_user;?> Pengguna</span>
+                            <span class="card-label fw-bolder fs-3 mb-1">Menu</span>
+                            <span class="text-muted mt-1 fw-bold fs-7"><?=$jumlah_menu;?> Menu</span>
                         </h3>
                         <!-- Button trigger modal -->
                         <div class="card-toolbar">
@@ -51,8 +51,8 @@
                                 <!--end::Menu separator-->
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
-                                    <a href="<?=base_url('users/show_user_add');?>" class="menu-link px-3">
-                                        Tambah Pengguna
+                                    <a href="<?=base_url('menu/show_menu_add');?>" class="menu-link px-3">
+                                        Tambah Menu
                                     </a>
                                 </div>
                                 <!--end::Menu item-->
@@ -136,38 +136,39 @@
                                 <!--end::Table head-->
                                 <!--begin::Table body-->
                                 <tbody>
-                                    <?php foreach ($dataUser as $key => $user): ?>
+                                    <?php foreach ($dataMenu as $key => $menu): ?>
                                     <tr>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <!--begin::Avatar-->
-                                                <div class="symbol symbol-45px me-5">
-                                                    <img alt="Pic"
-                                                        src="<?=base_url();?>assets/media/avatars/150-1.jpg" />
-                                                </div>
-                                                <!--end::Avatar-->
-                                                <!--begin::Name-->
+
                                                 <div class="d-flex justify-content-start flex-column">
                                                     <a href="#"
-                                                        class="text-dark fw-bolder text-hover-primary mb-1 fs-6"><?=$user['username']?></a>
+                                                        class="text-dark fw-bolder text-hover-primary mb-1 fs-6"><?=$menu['short_name']?></a>
                                                     <a href="#"
                                                         class="text-muted text-hover-primary fw-bold text-muted d-block fs-7">
-                                                        <span class="text-dark">Role</span>:
-                                                        <?=$user['role'];?></a>
+                                                        <span class="text-dark">Menu</span>:
+                                                        <?=$menu['long_name'];?></a>
                                                 </div>
-                                                <!--end::Name-->
                                             </div>
                                         </td>
                                         <td class="text-end">
                                             <a href="#"
-                                                class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">$560,000</a>
-                                            <span class="text-muted fw-bold text-muted d-block fs-7">Paid</span>
+                                                class="text-dark text-center fw-bolder text-hover-primary d-block mb-1 fs-6"><?=$menu['ikon'];?></a>
+                                            <span
+                                                class="text-muted fw-bold text-center text-muted d-block fs-7">Ikon</span>
                                         </td>
-                                        <td class="text-muted fw-bold text-end">
-                                            Laravel, Metronic
+                                        <td class="text-muted fw-bold text-center">
+                                            <?=$menu['link_parent'] == null ? '-':'';?>
+                                            <span class="text-muted fw-bold text-center text-muted d-block fs-7">Link
+                                                Parent</span>
                                         </td>
-                                        <td class="text-end">
-                                            <span class="badge badge-light-success">Approved</span>
+                                        <td class="text-center">
+                                            <span class="badge badge-light-success"><?=$menu['nama_menu'];?></span>
+                                        </td>
+                                        <td class="text-muted fw-bold text-center">
+                                            <span class="text-dark fw-bold text-center d-block fs-7">Link
+                                                Sub Menu</span>
+                                            <?=$menu['link_menu'] == null ? '-':$menu['link_menu'];?>
                                         </td>
                                         <td class="text-end">
                                             <a href="#"
@@ -186,7 +187,7 @@
                                                 </span>
                                                 <!--end::Svg Icon-->
                                             </a>
-                                            <a href="<?=base_url('users/show_edit/').$user['id_auth'];?>"
+                                            <a href="#"
                                                 class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                 <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
                                                 <span class="svg-icon svg-icon-3">
@@ -202,8 +203,7 @@
                                                 </span>
                                                 <!--end::Svg Icon-->
                                             </a>
-                                            <button data-bs-toggle="modal" data-bs-target="#hapus<?=$user['id_auth'];?>"
-                                                type="button"
+                                            <a href="#"
                                                 class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                                                 <span class="svg-icon svg-icon-3">
@@ -221,7 +221,7 @@
                                                     </svg>
                                                 </span>
                                                 <!--end::Svg Icon-->
-                                            </button>
+                                            </a>
                                         </td>
                                     </tr>
                                     <?php endforeach;?>
@@ -250,31 +250,6 @@
 <!--end::Drawers-->
 <!--begin::Modals-->
 <!--begin::Modal - Create App-->
-<!-- begin::Modal Hapus Pengguna -->
-<?php foreach ($dataUser as $key => $user):?>
-<div class="modal fade" id="hapus<?=$user['id_auth'];?>" tabindex="-1" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form action="<?=base_url('users/delete_user');?>" method="post">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Hapus Pengguna</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Anda yakin ingin hapus <strong><?=$user['username'];?></strong> ?</p>
-                    <input type="hidden" name="id_auth" value="<?=$user['id_auth'];?>">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
-                    <button type="submit" class="btn btn-primary">Hapus</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<?php endforeach; ?>
-<!-- end::Modal Hapus Pengguna -->
 <?php $this->load->view('./templates/modals');?>
 <!--end::Modal - Select Location-->
 <!--end::Modals-->
