@@ -13,7 +13,7 @@ class Home extends CI_Controller {
 
 	public function index()
 	{
-		$data['parentMenu'] = $this->get_menu();
+		$data['dataMenu'] = $this->get_menu();
 		$this->load->view('./templates/header', $data);
 		$this->load->view('home');
 		$this->load->view('./templates/footer');

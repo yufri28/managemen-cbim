@@ -51,5 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'home/index';
 $route['users/show_edit/(:num)'] = 'users/show_user_edit/$1';
+$route['menu/add-akses/(:num)'] = 'menu/show_akses_add/$1';
+$route['menu/edit-menu/(:num)'] = 'menu/show_menu_edit/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

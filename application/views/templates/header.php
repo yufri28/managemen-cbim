@@ -79,21 +79,21 @@
                                   <span class="menu-title text-center">Home</span>
                               </a>
                           </div>
-                          <?php foreach ($parentMenu as $key => $parent):?>
-                          <?php if($parent['long_name'] == NULL):?>
+                          <?php foreach ($dataMenu as $key => $menu):?>
+                          <?php if($menu['long_name'] == NULL):?>
                           <div class="menu-item py-2">
-                              <a class="menu-link <?= $this->uri->segment(1) == strtolower($parent['short_name']) ? 'active' : '' ?> menu-center"
-                                  href="<?=$parent['link_parent'];?>" data-bs-trigger="hover" data-bs-dismiss="click"
+                              <a class="menu-link <?= $this->uri->segment(1) == strtolower($menu['short_name']) ? 'active' : '' ?> menu-center"
+                                  href="<?=$menu['link_parent'];?>" data-bs-trigger="hover" data-bs-dismiss="click"
                                   data-bs-placement="right">
                                   <span class="menu-icon me-0">
                                       <!-- <i class="bi bi-house fs-2"></i> -->
-                                      <?=$parent['ikon'];?>
+                                      <?=$menu['ikon'];?>
                                   </span>
-                                  <span class="menu-title text-center"><?=$parent['short_name'];?></span>
+                                  <span class="menu-title text-center"><?=$menu['short_name'];?></span>
                               </a>
                           </div>
                           <?php else:?>
-                          <?php $sub_menu = $this->db->query("SELECT * FROM sub_menu WHERE parent_id='".$parent['id_menu']."'")->result_array();?>
+                          <?php $sub_menu = $this->db->query("SELECT * FROM sub_menu WHERE parent_id='".$menu['id_menu']."'")->result_array();?>
                           <div data-kt-menu-trigger="click" data-kt-menu-placement="right-start" class="menu-item py-2">
                               <span class="menu-link menu-center" data-bs-trigger="hover" data-bs-dismiss="click"
                                   data-bs-placement="right">
@@ -101,14 +101,14 @@
                                       <!-- (1) Icon menu sidebar -->
                                       <i class="bi bi-file-earmark-lock fs-2"></i>
                                   </span>
-                                  <span class="menu-title"><?=$parent['short_name'];?></span>
+                                  <span class="menu-title"><?=$menu['short_name'];?></span>
                               </span>
                               <div class="menu-sub menu-sub-dropdown w-225px px-1 py-4">
                                   <div class="menu-item">
                                       <div class="menu-content">
                                           <!-- (2) Judul menu sub dropdown -->
                                           <span
-                                              class="menu-section fs-5 fw-bolder ps-1 py-1 text-center"><?=$parent['long_name'];?></span>
+                                              class="menu-section fs-5 fw-bolder ps-1 py-1 text-center"><?=$menu['long_name'];?></span>
                                       </div>
                                   </div>
                                   <div data-kt-menu-trigger="click" class="menu-item menu-accordion">

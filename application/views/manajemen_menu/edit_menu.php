@@ -11,7 +11,7 @@
                     <!--begin::Header-->
                     <div class="card-header border-0 pt-5">
                         <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bolder fs-3 mb-1">Tambah Menu</span>
+                            <span class="card-label fw-bolder fs-3 mb-1">Edit Menu</span>
                         </h3>
                     </div>
                     <hr>
@@ -21,27 +21,31 @@
                         <h5 class="card-title align-items-start flex-column">
                             <span class="card-label text-primary fw-bolder fs-4 mb-1">Parent Menu</span>
                         </h5>
-                        <form action="<?=base_url('menu/add_menu');?>" method="post">
+                        <?php foreach ($parentMenu as $key => $menu):?>
+                        <form action="<?=base_url('menu/edit_menu');?>" method="post">
                             <div class="mb-3">
-                                <input type="hidden" value="<?=$jumlah_menu+1?>" class="form-control" required
+                                <input type="text" value="<?=$menu['id_menu'];?>" class="form-control" required
                                     name="id_parent" id="id_parent">
                             </div>
                             <div class="mb-3">
                                 <label for="short_name" class="form-label">Short Name</label>
-                                <input type="text" class="form-control" required name="short_name" id="short_name">
+                                <input type="text" class="form-control" value="<?=$menu['short_name'];?>" required
+                                    name="short_name" id="short_name">
                             </div>
                             <div class="mb-3">
                                 <label for="long_name" class="form-label">Long Name</label>
-                                <input type="text" class="form-control" required name="long_name" id="long_name">
+                                <input type="text" class="form-control" value="<?=$menu['long_name'];?>" required
+                                    name="long_name" id="long_name">
                             </div>
                             <div class="mb-3">
                                 <label for="ikon" class="form-label">Ikon</label>
-                                <!-- <input type="text" class="form-control" required name="ikon" id="ikon"> -->
-                                <textarea class="form-control" required name="ikon" id="ikon"></textarea>
+                                <textarea class="form-control" required name="ikon"
+                                    id="ikon"><?=$menu['ikon'];?></textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="link_parent" class="form-label">Link Parent Menu</label>
-                                <input type="text" class="form-control" required name="link_parent" id="link_parent">
+                                <input type="text" class="form-control" value="<?=$menu['link_parent'];?>" required
+                                    name="link_parent" id="link_parent">
                             </div>
 
                             <div id="additional_inputs"></div>
@@ -53,6 +57,42 @@
                                 <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
                             </div>
                         </form>
+                        <?php endforeach;?>
+                        <div class="d-flex">
+                            <?php foreach ($dataSubMenu as $key => $subMenu):?>
+                            <div class="alert alert-primary fs-8" style="border-radius:2em;" role="alert">
+                                <?=$subMenu['nama_menu'];?> <button type="button" class="btn-close fs-10 delete-button"
+                                    data-id="<?= $subMenu['id_sub']; ?>"></button>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                        <script>
+                        $(document).ready(function() {
+                            // Menggantikan form dengan permintaan AJAX
+                            $(".delete-button").on("click", function() {
+                                var id_sub = $(this).data("id");
+                                var listItem = $(this).closest(
+                                    "div"); // Simpan referensi elemen div yang akan dihapus
+
+                                $.ajax({
+                                    url: "<?= base_url('menu/hapus_sub'); ?>",
+                                    type: "POST",
+                                    data: {
+                                        id_sub: id_sub
+                                    },
+                                    success: function(response) {
+                                        // Handle respon jika diperlukan
+                                        console.log(response);
+                                        if (response.status === "success") {
+                                            // Hapus elemen dari daftar setelah penghapusan berhasil
+                                            listItem.remove();
+                                        }
+                                    },
+                                });
+                            });
+                        });
+                        </script>
                     </div>
                     <!--begin::Body-->
                 </div>

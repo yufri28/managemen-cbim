@@ -3,9 +3,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Users extends CI_Controller {
 
+    private $id_auth;
+
+	public function __construct()
+	{
+		parent::__construct();
+		if (!$this->session->userdata('kode_role')) {
+			redirect(base_url('auth'));
+		}
+        $this->id_auth = $this->session->userdata['id_auth'];
+	}
+
 	public function index()
 	{
-        $data['parentMenu'] = $this->get_menu();
+        $data['dataMenu'] = $this->get_menu($this->id_auth);
         $data['dataUser'] = $this->get_user(); 
         $data['jumlah_user'] = $this->count_user();
         $this->load->view('./templates/header', $data);
@@ -15,7 +26,7 @@ class Users extends CI_Controller {
 
 
     public function show_user_add(){
-        $data['parentMenu'] = $this->get_menu();
+        $data['dataMenu'] = $this->get_menu($this->id_auth);
 		$data['dataRole'] = $this->get_role();
         $this->load->view('./templates/header', $data);
 		$this->load->view('./manajemen_user/add_users');
@@ -69,14 +80,14 @@ class Users extends CI_Controller {
     }
 
     public function show_role_add(){
-        $data['parentMenu'] = $this->get_menu();
+       $data['dataMenu'] = $this->get_menu($this->id_auth);
 		$data['dataRole'] = $this->get_role();
         $this->load->view('./templates/header', $data);
 		$this->load->view('./manajemen_user/add_role');
         $this->load->view('./templates/footer');
     }
     public function show_user_edit($id){
-        $data['parentMenu'] = $this->get_menu();
+       $data['dataMenu'] = $this->get_menu($this->id_auth);
 		$data['dataRole'] = $this->get_role();
         $this->load->view('./templates/header', $data);
 		$this->load->view('./manajemen_user/edit_user');
@@ -111,8 +122,8 @@ class Users extends CI_Controller {
     }
 
 
-    public function get_menu(){
-		$data = $this->db->query("SELECT * FROM man_navbar mn JOIN auth a ON mn.f_id_auth=a.id_auth JOIN parent_menu pm ON pm.id_menu=mn.f_id_menu WHERE a.id_auth=1;")->result_array();
+    public function get_menu($id_auth){
+		$data = $this->db->query("SELECT * FROM man_navbar mn JOIN auth a ON mn.f_id_auth=a.id_auth JOIN parent_menu pm ON pm.id_menu=mn.f_id_menu WHERE a.id_auth='$id_auth';")->result_array();
 		return $data;
 	}
 
