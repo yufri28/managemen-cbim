@@ -213,6 +213,54 @@ class Menu extends CI_Controller {
         redirect('menu');
     }
 
+
+    public function edit_sub($id_sub)
+    {
+        $data['dataMenu'] = $this->get_menu($this->id_auth);
+        $data['dataSubMenu'] = $this->sub_by_id($id_sub);
+        $this->load->view('./templates/header', $data);
+		$this->load->view('./manajemen_menu/edit_sub_menu');
+        $this->load->view('./templates/footer');
+    }
+
+    public function save_edit_sub()
+    {
+        $id_sub = $this->input->post('id_sub');
+        $nama_menu = $this->input->post('nama_menu');
+        $link_menu = $this->input->post('link_menu');
+        $parent_id = $this->input->post('id_parent');
+
+        $data = array(
+            'nama_menu' => $nama_menu,
+            'link_menu' => $link_menu,
+            'parent_id' => $parent_id
+        );
+
+        $update_sub = $this->db->update('sub_menu', $data, array('id_sub' => $id_sub));
+
+        if ($update_sub) {
+            $this->session->set_flashdata('success', 'Data berhasil diupdate.');
+        } else {
+            $this->session->set_flashdata('error', 'Data gagal diupdate.');
+        }
+        redirect('menu');
+    }
+
+    public function hapus_sub_menu()
+    {
+        $id_sub = $this->input->post('id_sub');
+        if (!empty($id_sub)) {
+            $this->db->where('id_sub', $id_sub);
+            $this->db->delete('sub_menu');
+            if ($this->db->affected_rows() > 0) {
+                $this->session->set_flashdata('success', 'Data berhasil dihapus.');
+            }else{
+                $this->session->set_flashdata('error', 'Data gagal dihapus.');
+            }
+        }
+        redirect('menu');
+    }
+
     public function hapus_sub()
     {
         $id_sub = $this->input->post('id_sub');
@@ -229,6 +277,12 @@ class Menu extends CI_Controller {
 
 	public function get_sub_menu(){
 		$data = $this->db->query("SELECT * FROM parent_menu pm JOIN sub_menu sm ON pm.id_menu=sm.parent_id;")->result_array();
+		return $data;
+	}
+
+    public function sub_by_id($id_sub){
+
+		$data = $this->db->query("SELECT * FROM parent_menu pm JOIN sub_menu sm ON pm.id_menu=sm.parent_id WHERE sm.id_sub='$id_sub'")->result_array();
 		return $data;
 	}
 

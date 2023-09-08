@@ -292,23 +292,7 @@
                                             <?=$menu['link_menu'] == null ? '-':$menu['link_menu'];?>
                                         </td>
                                         <td class="text-end">
-                                            <a href="<?=base_url('menu/add-akses/'.$menu['id_sub']);?>"
-                                                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
-                                                <span class="svg-icon svg-icon-3">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none">
-                                                        <path
-                                                            d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z"
-                                                            fill="black" />
-                                                        <path opacity="0.3"
-                                                            d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </a>
-                                            <a href="#"
+                                            <a href="<?=base_url('menu/edit-sub/'.$menu['id_sub']);?>"
                                                 class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                 <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
                                                 <span class="svg-icon svg-icon-3">
@@ -324,7 +308,8 @@
                                                 </span>
                                                 <!--end::Svg Icon-->
                                             </a>
-                                            <a href="#"
+                                            <button type="button" data-bs-toggle="modal"
+                                                data-bs-target="#hapus<?=$menu['id_sub'];?>"
                                                 class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                                                 <span class="svg-icon svg-icon-3">
@@ -342,7 +327,7 @@
                                                     </svg>
                                                 </span>
                                                 <!--end::Svg Icon-->
-                                            </a>
+                                            </button>
                                         </td>
                                     </tr>
                                     <?php endforeach;?>
@@ -419,36 +404,6 @@
                     <?php endforeach; ?>
                 </ol>
             </div>
-
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script>
-            $(document).ready(function() {
-                // Menggantikan form dengan permintaan AJAX
-                $(".delete-button").on("click", function() {
-                    var id_man_nav = $(this).data("id");
-                    var listItem = $(this).closest(
-                        "li"); // Simpan referensi elemen li yang akan dihapus
-
-                    $.ajax({
-                        url: "<?= base_url('menu/hapus_akses'); ?>",
-                        type: "POST",
-                        data: {
-                            id_man_nav: id_man_nav
-                        },
-                        success: function(response) {
-                            // Handle respon jika diperlukan
-                            console.log(response);
-                            if (response.status === "success") {
-                                // Hapus elemen dari daftar setelah penghapusan berhasil
-                                listItem.remove();
-                            }
-                        },
-                    });
-                });
-            });
-            </script>
-
-
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
             </div>
@@ -457,6 +412,59 @@
 </div>
 <?php endforeach; ?>
 <!-- end::Modal Akses Pengguna -->
+
+<!-- begin::Modal Hapus Sub Menu -->
+<?php foreach ($subMenu as $key => $menu):?>
+<div class="modal fade" id="hapus<?=$menu['id_sub'];?>" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="<?=base_url('menu/hapus_sub_menu');?>" method="post">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Hapus Menu</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Anda yakin ingin hapus menu <strong><?=$menu['nama_menu'];?></strong> ?</p>
+                    <input type="hidden" name="id_sub" value="<?=$menu['id_sub'];?>">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
+                    <button type="submit" class="btn btn-primary">Hapus</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<?php endforeach; ?>
+<!-- end::Modal Hapus Sub Menu -->
 <?php $this->load->view('./templates/modals');?>
 <!--end::Modal - Select Location-->
 <!--end::Modals-->
+
+<!-- begin::Javascript -->
+<script>
+$(document).ready(function() {
+    $(".delete-button").on("click", function() {
+        var id_man_nav = $(this).data("id");
+        var listItem = $(this).closest(
+            "li");
+        $.ajax({
+            url: "<?= base_url('menu/hapus_akses'); ?>",
+            type: "POST",
+            data: {
+                id_man_nav: id_man_nav
+            },
+            success: function(response) {
+
+                console.log(response);
+                if (response.status === "success") {
+
+                    listItem.remove();
+                }
+            },
+        });
+    });
+});
+</script>
+<!-- end::Javascript -->

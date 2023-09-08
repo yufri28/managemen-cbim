@@ -66,33 +66,6 @@
                             </div>
                             <?php endforeach; ?>
                         </div>
-                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                        <script>
-                        $(document).ready(function() {
-                            // Menggantikan form dengan permintaan AJAX
-                            $(".delete-button").on("click", function() {
-                                var id_sub = $(this).data("id");
-                                var listItem = $(this).closest(
-                                    "div"); // Simpan referensi elemen div yang akan dihapus
-
-                                $.ajax({
-                                    url: "<?= base_url('menu/hapus_sub'); ?>",
-                                    type: "POST",
-                                    data: {
-                                        id_sub: id_sub
-                                    },
-                                    success: function(response) {
-                                        // Handle respon jika diperlukan
-                                        console.log(response);
-                                        if (response.status === "success") {
-                                            // Hapus elemen dari daftar setelah penghapusan berhasil
-                                            listItem.remove();
-                                        }
-                                    },
-                                });
-                            });
-                        });
-                        </script>
                     </div>
                     <!--begin::Body-->
                 </div>
@@ -106,6 +79,7 @@
 </div>
 <?php $this->load->view('./templates/drawers');?>
 <?php $this->load->view('./templates/modals');?>
+<!-- Begin::Javascript -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const additionalInputs = document.getElementById('additional_inputs');
@@ -131,3 +105,26 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+<script>
+$(document).ready(function() {
+    $(".delete-button").on("click", function() {
+        var id_sub = $(this).data("id");
+        var listItem = $(this).closest(
+            "div");
+        $.ajax({
+            url: "<?= base_url('menu/hapus_sub'); ?>",
+            type: "POST",
+            data: {
+                id_sub: id_sub
+            },
+            success: function(response) {
+                console.log(response);
+                if (response.status === "success") {
+                    listItem.remove();
+                }
+            },
+        });
+    });
+});
+</script>
+<!-- end::Javascript -->
