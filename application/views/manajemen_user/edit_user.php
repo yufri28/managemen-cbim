@@ -17,41 +17,42 @@
                     <!--end::Header-->
                     <!--begin::Body-->
                     <div class="card-body pt-3">
-                        <form action="<?=base_url('users/add_user');?>" method="post">
+                        <?php foreach ($dataUser as $key => $user):?>
+                        <form action="<?=base_url('users/save_edit_user');?>" method="post">
                             <div class="mb-3">
+                                <input type="hidden" class="form-control" value="<?=$user['id_auth'];?>" required
+                                    name="id_auth" id="id_auth">
                                 <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control" required name="username" id="username"
-                                    aria-describedby="emailHelp">
+                                <input type="text" class="form-control" value="<?=$user['username'];?>" required
+                                    name="username" id="username">
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                                <input type="password" name="password" required class="form-control"
-                                    id="exampleInputPassword1">
+                                <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+                                <small>
+                                    <i>
+                                        Kosongkan jika tidak ingin mengubah password!
+                                    </i>
+                                </small>
                             </div>
+
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Role</label>
                                 <select name="role_user" required class="form-select form-select"
                                     aria-label="Small select example">
                                     <option selected>-- Pilih Role --</option>
                                     <?php foreach ($dataRole as $key => $role):?>
-                                    <option value="<?=$role['id_role']?>"><?=$role['role']?></option>
+                                    <option <?= $user['f_id_role'] == $role['id_role'] ? 'selected':'';?>
+                                        value="<?=$role['id_role']?>"><?=$role['role']?></option>
                                     <?php endforeach; ?>
                                 </select>
-                                <small>
-                                    <i>
-                                        Jika role tidak ada pada pilihan,
-                                        <a href="<?=base_url('users/show_role_add');?>">
-                                            Klik
-                                        </a>
-                                        untuk tambah data role!
-                                    </i>
-                                </small>
                             </div>
                             <div class="d-flex justify-content-end">
                                 <a href="<?=base_url('users');?>" class="btn my-3 me-1 btn-danger">Kembali</a>
                                 <button type="submit" class="btn my-3 btn-primary">Simpan</button>
                             </div>
                         </form>
+                        <?php endforeach; ?>
                     </div>
                     <!--begin::Body-->
                 </div>

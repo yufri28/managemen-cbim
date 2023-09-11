@@ -18,6 +18,12 @@ class M_users extends CI_Model
 		return $data;
     }
 
+    public function user_by_id($id=null){
+        $data = $this->db->query("SELECT * FROM auth WHERE id_auth='$id';")->result_array();
+		return $data;
+    }
+
+
     public function count_user()
     {
         $data_user = $this->db->query("SELECT COUNT(*) AS jumlah_user FROM auth WHERE username!='admin'")->row_array();

@@ -96,9 +96,44 @@ class Users extends CI_Controller {
         $data['jumlah_notif'] = $this->m_users->count_notification();
        $data['dataMenu'] = $this->m_menu->get_menu($this->id_role);
 		$data['dataRole'] = $this->m_users->get_role();
+        $data['dataUser'] = $this->m_users->user_by_id($id);
         $this->load->view('./templates/header', $data);
 		$this->load->view('./manajemen_user/edit_user');
         $this->load->view('./templates/footer');
+    }
+
+    public function save_edit_user(){
+        
+        $id_auth = htmlspecialchars($this->input->post('id_auth'));
+        $username = htmlspecialchars($this->input->post('username'));
+		$password = htmlspecialchars($this->input->post('password'));
+		$role_user = htmlspecialchars($this->input->post('role_user'));
+
+        
+        if($password == "")
+        {
+            $data = array(
+                'username' => $username,
+                'f_id_role' => $role_user
+            );
+        }else{
+            $data = array(
+                'username' => $username,
+                'password' => password_hash($password, PASSWORD_BCRYPT),
+                'f_id_role' => $role_user
+            );
+        }
+
+        $this->db->where('id_auth', $id_auth);
+        $update = $this->db->update('auth', $data);
+
+        if($update)
+        {
+            $this->session->set_flashdata('success', 'Data berhasil diedit.');
+        } else {
+            $this->session->set_flashdata('error', 'Data gagal diedit.');
+        }
+        redirect('users');
     }
 
     public function add_role()
