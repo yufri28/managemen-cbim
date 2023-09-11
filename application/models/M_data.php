@@ -33,6 +33,18 @@ class M_data extends CI_Model
     {
         $this->db->delete($table, $where);
     }
+
+    public function count_notification(){
+     
+        $data = $this->db->query("SELECT COUNT(*) AS jumlah_notif FROM notifikasi")->row_array();
+        return $data['jumlah_notif'];
+    }
+
+    public function get_notification(){
+     
+        $data = $this->db->query("SELECT * FROM notifikasi")->result_array();
+        return $data;
+    }
 }
 
 ?>

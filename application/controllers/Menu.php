@@ -27,7 +27,7 @@ class Menu extends CI_Controller {
         $data['jumlah_parent_menu'] = $this->m_menu->count_parent_menu();
         $data['jumlah_sub_menu'] = $this->m_menu->count_sub_menu();
 
-        $data['jumlah_notif'] = $this->m_menu->count_notification();
+        $data['jumlah_notif'] = $this->m_data->count_notification();
 		$this->load->view('./templates/header', $data);
 		$this->load->view('./manajemen_menu/menu');
 		$this->load->view('./templates/footer');
@@ -131,7 +131,7 @@ class Menu extends CI_Controller {
         $data['dataMenu'] = $this->m_menu->get_menu($this->id_auth);
         $data['dataSubMenu'] = $this->m_menu->get_sub_menu();
         $data['jumlah_menu'] = $this->m_menu->get_last_id();
-        $data['jumlah_notif'] = $this->m_menu->count_notification();
+        $data['jumlah_notif'] = $this->m_data->count_notification();
         $this->load->view('./templates/header', $data);
 		$this->load->view('./manajemen_menu/add_menu');
         $this->load->view('./templates/footer');
@@ -142,7 +142,7 @@ class Menu extends CI_Controller {
         $data['dataSubMenu'] = $this->m_menu->sub_menu_by_id($id_menu);
         $data['parentMenu'] = $this->m_menu->parent_menu_by_id($id_menu);
         $data['jumlah_menu'] = $this->m_menu->get_last_id();
-        $data['jumlah_notif'] = $this->m_menu->count_notification();
+        $data['jumlah_notif'] = $this->m_data->count_notification();
         $this->load->view('./templates/header', $data);
 		$this->load->view('./manajemen_menu/edit_menu');
         $this->load->view('./templates/footer');
@@ -153,7 +153,7 @@ class Menu extends CI_Controller {
         $data['parentMenu'] = $this->m_menu->get_menu($this->id_auth);
         $data['dataMenu'] = $this->m_menu->get_sub_menu();
         $data['jumlah_menu'] = $this->m_menu->count_menu();
-        $data['jumlah_notif'] = $this->m_menu->count_notification();
+        $data['jumlah_notif'] = $this->m_data->count_notification();
         $this->load->view('./templates/header', $data);
 		$this->load->view('./manajemen_menu/akses_pengguna');
         $this->load->view('./templates/footer');
@@ -165,7 +165,7 @@ class Menu extends CI_Controller {
         $data['dataParentMenu'] = $this->m_menu->parent_by_id($id);
         $data['jumlah_menu'] = $this->m_menu->get_last_id();
         $data['dataRole'] = $this->m_menu->get_all_role();
-        $data['jumlah_notif'] = $this->m_menu->count_notification();
+        $data['jumlah_notif'] = $this->m_data->count_notification();
         $this->load->view('./templates/header', $data);
 		$this->load->view('./manajemen_menu/add_akses');
         $this->load->view('./templates/footer');
@@ -288,7 +288,7 @@ class Menu extends CI_Controller {
                     'create_at' => date('Y-m-d H:i:s')
                 );
                $this->db->insert('notifikasi', $notif);
-               $total_notif = $this->m_menu->count_notification();
+               $total_notif = $this->m_data->count_notification();
                $response = array('status' => 'success', 'message' => 'Akses berhasil dihapus','total_notif' => $total_notif);
             }
         }

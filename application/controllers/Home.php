@@ -17,6 +17,7 @@ class Home extends CI_Controller {
 	public function index()
 	{
 		$data['jumlah_notif'] = $this->count_notification();
+		$data['dataNotif'] = $this->m_data->get_notification();
 		$data['dataMenu'] = $this->get_menu($this->id_role);
 		$this->load->view('./templates/header', $data);
 		$this->load->view('home');

@@ -484,8 +484,7 @@ $(document).ready(function() {
                     listItem.remove();
                     // Memperbarui jumlah notifikasi secara real-time
                     var currentJumlahNotif = parseInt($("#jumlah_notif").text());
-                    var newJumlahNotif = currentJumlahNotif - 1;
-
+                    var newJumlahNotif = currentJumlahNotif + 1;
                     $("#jumlah_notif").text(newJumlahNotif);
                 }
 

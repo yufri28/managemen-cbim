@@ -3,12 +3,6 @@ defined('BASEPATH') or exit('no direct script access allowed');
 
 class M_menu extends CI_Model
 {
-    public function count_notification(){
-     
-        $data = $this->db->query("SELECT COUNT(*) AS jumlah_notif FROM notifikasi")->row_array();
-
-        return $data['jumlah_notif'];
-    }
 
     public function get_sub_menu(){
 		$data = $this->db->query("SELECT * FROM parent_menu pm JOIN sub_menu sm ON pm.id_menu=sm.parent_id;")->result_array();

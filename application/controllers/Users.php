@@ -20,7 +20,8 @@ class Users extends CI_Controller {
 
 	public function index()
 	{
-        $data['jumlah_notif'] = $this->m_users->count_notification();
+        $data['jumlah_notif'] = $this->m_data->count_notification();
+        $data['dataNotif'] = $this->m_data->get_notification();
         $data['dataMenu'] = $this->m_menu->get_menu($this->id_role);
         $data['dataUser'] = $this->m_users->get_user(); 
         $data['jumlah_user'] = $this->m_users->count_user();
@@ -33,7 +34,8 @@ class Users extends CI_Controller {
     public function show_user_add(){
         $data['dataMenu'] = $this->m_menu->get_menu($this->id_role);
 		$data['dataRole'] = $this->m_users->get_role();
-        $data['jumlah_notif'] = $this->m_users->count_notification();
+        $data['jumlah_notif'] = $this->m_data->count_notification();
+        $data['dataNotif'] = $this->m_data->get_notification();
         $this->load->view('./templates/header', $data);
 		$this->load->view('./manajemen_user/add_users');
         $this->load->view('./templates/footer');
@@ -93,7 +95,8 @@ class Users extends CI_Controller {
         $this->load->view('./templates/footer');
     }
     public function show_user_edit($id){
-        $data['jumlah_notif'] = $this->m_users->count_notification();
+        $data['jumlah_notif'] = $this->m_data->count_notification();
+        $data['dataNotif'] = $this->m_data->get_notification();
        $data['dataMenu'] = $this->m_menu->get_menu($this->id_role);
 		$data['dataRole'] = $this->m_users->get_role();
         $data['dataUser'] = $this->m_users->user_by_id($id);
