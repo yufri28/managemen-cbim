@@ -3253,6 +3253,12 @@
                                           <i class="bi bi-bell fs-2"></i>
                                           <span id="jumlah_notif"
                                               class="badge fs-5 ms-n4 text-danger"><?=$jumlah_notif;?></span>
+                                          <audio hidden controls id="audioplay">
+                                              <source
+                                                  src="<?=base_url('assets/media/sounds/mixkit-confirmation-tone-2867.wav');?>"
+                                                  type="audio/wav">
+                                              Browsermu tidak mendukung tag audio, upgrade donk!
+                                          </audio>
                                       </div>
                                       <!--begin::Menu-->
                                       <!--begin::Menu-->
@@ -3264,7 +3270,7 @@
                                               <!--begin::Title-->
                                               <h3 class="text-white fw-bold px-9 mt-10 mb-6">
                                                   Notifications
-                                                  <span class="fs-8 opacity-75 ps-3">24 reports</span>
+                                                  <span class="fs-8 opacity-75 ps-3"><?=$jumlah_notif;?> reports</span>
                                               </h3>
                                               <!--end::Title-->
                                               <!--begin::Tabs-->
@@ -3658,31 +3664,10 @@
                                               <!--end::Tab panel-->
                                               <!--begin::Tab panel-->
                                               <div class="tab-pane fade" id="kt_topbar_notifications_3" role="tabpanel">
-                                                  <?php foreach ($dataNotif as $key => $notif):?>
                                                   <!--begin::Items-->
                                                   <div class="scroll-y mh-325px my-5 px-8">
-                                                      <!--begin::Item-->
-                                                      <div class="d-flex flex-stack py-4">
-                                                          <!--begin::Section-->
-                                                          <div class="d-flex align-items-center me-2">
-                                                              <!--begin::Code-->
-                                                              <span class="w-70px badge badge-light-success me-4">200
-                                                                  OK</span>
-                                                              <!--end::Code-->
-                                                              <!--begin::Title-->
-                                                              <a href="#"
-                                                                  class="text-gray-800 text-hover-primary fw-bold"><?=$notif['isi_notifikasi'];?></a>
-                                                              <!--end::Title-->
-                                                          </div>
-                                                          <!--end::Section-->
-                                                          <!--begin::Label-->
-                                                          <span class="badge badge-light fs-8">Just now</span>
-                                                          <!--end::Label-->
-                                                      </div>
-                                                      <!--end::Item-->
                                                   </div>
                                                   <!--end::Items-->
-                                                  <?php endforeach;?>
                                                   <!--begin::View more-->
                                                   <div class="py-3 text-center border-top">
                                                       <a href="<?=base_url()?><?=base_url()?>demo6/dist/pages/profile/activity.html"

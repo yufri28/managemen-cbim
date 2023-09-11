@@ -16,7 +16,7 @@ class Home extends CI_Controller {
 
 	public function index()
 	{
-		$data['jumlah_notif'] = $this->count_notification();
+		$data['jumlah_notif'] = $this->m_data->count_notification();
 		$data['dataNotif'] = $this->m_data->get_notification();
 		$data['dataMenu'] = $this->get_menu($this->id_role);
 		$this->load->view('./templates/header', $data);
@@ -29,11 +29,13 @@ class Home extends CI_Controller {
 		$data = $this->db->query("SELECT * FROM man_navbar mn JOIN role r ON mn.f_id_role=r.id_role JOIN parent_menu pm ON pm.id_menu=mn.f_id_menu WHERE r.id_role='$id_role';")->result_array();
 		return $data;
 	}
-	public function count_notification(){
-     
-        $data = $this->db->query("SELECT COUNT(*) AS jumlah_notif FROM notifikasi")->row_array();
-
-        return $data['jumlah_notif'];
+	
+	public function count_notifications(){
+        $data = $this->m_data->count_notification();
+		$dataNotif = $this->m_data->get_notification();
+		$result['jumlah_notifikasi'] = $data;
+		$result['dataNotif'] = $dataNotif;
+		echo json_encode($result);
     }
 
 

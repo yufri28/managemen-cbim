@@ -482,10 +482,10 @@ $(document).ready(function() {
                 console.log(response);
                 if (response.status === "success") {
                     listItem.remove();
-                    // Memperbarui jumlah notifikasi secara real-time
-                    var currentJumlahNotif = parseInt($("#jumlah_notif").text());
-                    var newJumlahNotif = currentJumlahNotif + 1;
-                    $("#jumlah_notif").text(newJumlahNotif);
+                    // // Memperbarui jumlah notifikasi secara real-time
+                    // var currentJumlahNotif = parseInt($("#jumlah_notif").text());
+                    // var newJumlahNotif = currentJumlahNotif + 1;
+                    // $("#jumlah_notif").text(newJumlahNotif);
                 }
 
             },

@@ -28,6 +28,7 @@ class Menu extends CI_Controller {
         $data['jumlah_sub_menu'] = $this->m_menu->count_sub_menu();
 
         $data['jumlah_notif'] = $this->m_data->count_notification();
+        $data['dataNotif'] = $this->m_data->get_notification();
 		$this->load->view('./templates/header', $data);
 		$this->load->view('./manajemen_menu/menu');
 		$this->load->view('./templates/footer');
@@ -132,6 +133,7 @@ class Menu extends CI_Controller {
         $data['dataSubMenu'] = $this->m_menu->get_sub_menu();
         $data['jumlah_menu'] = $this->m_menu->get_last_id();
         $data['jumlah_notif'] = $this->m_data->count_notification();
+        $data['dataNotif'] = $this->m_data->get_notification();
         $this->load->view('./templates/header', $data);
 		$this->load->view('./manajemen_menu/add_menu');
         $this->load->view('./templates/footer');
@@ -143,6 +145,7 @@ class Menu extends CI_Controller {
         $data['parentMenu'] = $this->m_menu->parent_menu_by_id($id_menu);
         $data['jumlah_menu'] = $this->m_menu->get_last_id();
         $data['jumlah_notif'] = $this->m_data->count_notification();
+        $data['dataNotif'] = $this->m_data->get_notification();
         $this->load->view('./templates/header', $data);
 		$this->load->view('./manajemen_menu/edit_menu');
         $this->load->view('./templates/footer');
@@ -154,6 +157,7 @@ class Menu extends CI_Controller {
         $data['dataMenu'] = $this->m_menu->get_sub_menu();
         $data['jumlah_menu'] = $this->m_menu->count_menu();
         $data['jumlah_notif'] = $this->m_data->count_notification();
+        $data['dataNotif'] = $this->m_data->get_notification();
         $this->load->view('./templates/header', $data);
 		$this->load->view('./manajemen_menu/akses_pengguna');
         $this->load->view('./templates/footer');
@@ -166,6 +170,7 @@ class Menu extends CI_Controller {
         $data['jumlah_menu'] = $this->m_menu->get_last_id();
         $data['dataRole'] = $this->m_menu->get_all_role();
         $data['jumlah_notif'] = $this->m_data->count_notification();
+        $data['dataNotif'] = $this->m_data->get_notification();
         $this->load->view('./templates/header', $data);
 		$this->load->view('./manajemen_menu/add_akses');
         $this->load->view('./templates/footer');
@@ -206,6 +211,12 @@ class Menu extends CI_Controller {
             $this->db->where('id', $id_akses);
             $this->db->delete('man_navbar');
             if ($this->db->affected_rows() > 0) {
+                $notif = array(
+                    'isi_notifikasi' => "Menambah 2 akses",
+                    'status' => '0',
+                    'create_at' => date('Y-m-d H:i:s')
+                );
+                $this->db->insert('notifikasi', $notif);
                 $response = array('status' => 'success', 'message' => 'Akses berhasil dihapus');
             }
         }

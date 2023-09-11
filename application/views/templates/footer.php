@@ -97,6 +97,97 @@ var hostUrl = "<?=base_url()?>assets/";
   <script src="<?=base_url()?>assets/js/custom/modals/create-app.js"></script>
   <script src="<?=base_url()?>assets/js/custom/modals/upgrade-plan.js"></script>
   <!--end::Page Custom Javascript-->
+  <script>
+// $(document).ready(function() {
+//     setInterval(() => {
+//         $.ajax({
+//             url: "<?= base_url('home/count_notifications'); ?>",
+//             type: "POST",
+//             datatype: "json",
+//             data: {},
+//             success: function(response) {
+//                 var dataObj = JSON.parse(response);
+//                 var jumlahNotifikasi = dataObj.jumlah_notifikasi;
+//                 console.log(dataObj.dataNotif)
+//                 $('#jumlah_notif').html(jumlahNotifikasi);
+//             },
+//         });
+//     }, 2000);
+// });
+$(document).ready(function() {
+    // Fungsi yang akan dijalankan saat tombol di klik
+    function showAlert() {
+        alert("Tombol telah diklik!");
+    }
+
+
+    setInterval(() => {
+        $.ajax({
+            url: "<?= base_url('home/count_notifications'); ?>",
+            type: "POST",
+            datatype: "json",
+            data: {},
+            success: function(response) {
+                var dataObj = JSON.parse(response);
+                var jumlahNotifikasi = dataObj.jumlah_notifikasi;
+                var dataNotif = dataObj.dataNotif;
+                console.log(dataNotif);
+                $('#jumlah_notif').html(jumlahNotifikasi);
+
+                // Jika ada notifikasi baru, tampilkan pemberitahuan HTML5
+                if (jumlahNotifikasi > 0) {
+                    showNotification("Anda memiliki notifikasi baru.");
+                }
+                var audio = document.getElementById("audioplay").autoplay = true;
+
+                // Buat perulangan untuk dataNotif dan tambahkan elemen HTML ke dalam container
+                var container = $('.scroll-y.mh-325px.my-5.px-8');
+                container.empty(); // Kosongkan container sebelum mengisi ulang
+
+                $.each(dataNotif, function(key, notif) {
+                    var itemHTML = `
+                        <!--begin::Item-->
+                        <div class="d-flex flex-stack py-4">
+                            <!--begin::Section-->
+                            <div class="d-flex align-items-center me-2">
+                                <!--begin::Code-->
+                                <span class="w-70px badge badge-light-success me-4">200 OK</span>
+                                <!--end::Code-->
+                                <!--begin::Title-->
+                                <a href="#" class="text-gray-800 text-hover-primary fw-bold">${notif.isi_notifikasi}</a>
+                                <!--end::Title-->
+                            </div>
+                            <!--end::Section-->
+                            <!--begin::Label-->
+                            <span class="badge badge-light fs-8">Just now</span>
+                            <!--end::Label-->
+                        </div>
+                        <!--end::Item-->
+                    `;
+                    container.append(itemHTML); // Tambahkan item ke dalam container
+                });
+            },
+        });
+    }, 2000);
+
+
+
+
+    // Fungsi untuk menampilkan pemberitahuan HTML5
+    function showNotification(message) {
+        if ('Notification' in window) {
+            Notification.requestPermission(function(permission) {
+                if (permission === 'granted') {
+                    var notification = new Notification('Notifikasi', {
+                        body: message,
+                        icon: 'icon.png' // Ganti dengan path ke ikon yang sesuai
+                    });
+                }
+            });
+        }
+    }
+});
+  </script>
   <!--end::Javascript-->
   </body>
   <!--end::Body-->
