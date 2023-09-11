@@ -30,8 +30,8 @@
                                         <!--begin::Table head-->
                                         <thead>
                                             <tr class="fw-bolder text-muted">
-                                                <th class="min-w-150px">Pengguna</th>
-                                                <th class="min-w-140px">Role</th>
+                                                <th class="min-w-150px">Role</th>
+                                                <th class="min-w-140px">Kode Role</th>
                                                 <th class="w-25px">
                                                     <div
                                                         class="form-check form-check-sm form-check-custom form-check-solid">
@@ -46,7 +46,7 @@
                                         <!--end::Table head-->
                                         <!--begin::Table body-->
                                         <tbody>
-                                            <?php foreach ($dataPengguna as $key => $pengguna):?>
+                                            <?php foreach ($dataRole as $key => $role):?>
                                             <tr>
                                                 <td>
                                                     <div class="d-flex align-items-center">
@@ -56,19 +56,19 @@
                                                         </div>
                                                         <div class="d-flex justify-content-start flex-column">
                                                             <a href="#"
-                                                                class="text-dark fw-bolder text-hover-primary fs-6"><?=$pengguna['username'];?></a>
+                                                                class="text-dark fw-bolder text-hover-primary fs-6"><?=$role['role'];?></a>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <a href="#"
-                                                        class="text-dark fw-bolder text-hover-primary d-block fs-6"><?=$pengguna['role'];?></a>
+                                                        class="text-dark fw-bolder text-hover-primary d-block fs-6"><?=$role['kode_role'];?></a>
                                                 </td>
                                                 <td>
                                                     <div
                                                         class="form-check form-check-sm form-check-custom form-check-solid">
-                                                        <input class="form-check-input widget-9-check" name="id_auth[]"
-                                                            type="checkbox" value="<?=$pengguna['id_auth'];?>" />
+                                                        <input class="form-check-input widget-9-check" name="id_role[]"
+                                                            type="checkbox" value="<?=$role['id_role'];?>" />
                                                     </div>
                                                 </td>
                                             </tr>

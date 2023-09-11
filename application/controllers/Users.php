@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Users extends CI_Controller {
 
     private $id_auth;
+    private $id_role;
 
 	public function __construct()
 	{
@@ -11,23 +12,28 @@ class Users extends CI_Controller {
 		if (!$this->session->userdata('kode_role')) {
 			redirect(base_url('auth'));
 		}
-        $this->id_auth = $this->session->userdata['id_auth'];
+        $this->id_auth = $this->session->userdata('id_auth');
+        $this->id_role = $this->session->userdata('id_role');
+        $this->load->model('m_users');
+        $this->load->model('m_menu');
 	}
 
 	public function index()
 	{
-        $data['dataMenu'] = $this->get_menu($this->id_auth);
-        $data['dataUser'] = $this->get_user(); 
-        $data['jumlah_user'] = $this->count_user();
+        $data['jumlah_notif'] = $this->m_users->count_notification();
+        $data['dataMenu'] = $this->m_menu->get_menu($this->id_role);
+        $data['dataUser'] = $this->m_users->get_user(); 
+        $data['jumlah_user'] = $this->m_users->count_user();
+
         $this->load->view('./templates/header', $data);
 		$this->load->view('./manajemen_user/users');
         $this->load->view('./templates/footer');
 	}
 
-
     public function show_user_add(){
-        $data['dataMenu'] = $this->get_menu($this->id_auth);
-		$data['dataRole'] = $this->get_role();
+        $data['dataMenu'] = $this->m_menu->get_menu($this->id_role);
+		$data['dataRole'] = $this->m_users->get_role();
+        $data['jumlah_notif'] = $this->m_users->count_notification();
         $this->load->view('./templates/header', $data);
 		$this->load->view('./manajemen_user/add_users');
         $this->load->view('./templates/footer');
@@ -80,15 +86,16 @@ class Users extends CI_Controller {
     }
 
     public function show_role_add(){
-       $data['dataMenu'] = $this->get_menu($this->id_auth);
-		$data['dataRole'] = $this->get_role();
+       $data['dataMenu'] = $this->m_menu->get_menu($this->id_role);
+		$data['dataRole'] = $this->m_users->get_role();
         $this->load->view('./templates/header', $data);
 		$this->load->view('./manajemen_user/add_role');
         $this->load->view('./templates/footer');
     }
     public function show_user_edit($id){
-       $data['dataMenu'] = $this->get_menu($this->id_auth);
-		$data['dataRole'] = $this->get_role();
+        $data['jumlah_notif'] = $this->m_users->count_notification();
+       $data['dataMenu'] = $this->m_menu->get_menu($this->id_role);
+		$data['dataRole'] = $this->m_users->get_role();
         $this->load->view('./templates/header', $data);
 		$this->load->view('./manajemen_user/edit_user');
         $this->load->view('./templates/footer');
@@ -122,24 +129,5 @@ class Users extends CI_Controller {
     }
 
 
-    public function get_menu($id_auth){
-		$data = $this->db->query("SELECT * FROM man_navbar mn JOIN auth a ON mn.f_id_auth=a.id_auth JOIN parent_menu pm ON pm.id_menu=mn.f_id_menu WHERE a.id_auth='$id_auth';")->result_array();
-		return $data;
-	}
-
-    public function get_role(){
-		$data = $this->db->query("SELECT * FROM role WHERE kode_role != 1")->result_array();
-		return $data;
-	}
-
-    public function get_user(){
-        $data = $this->db->query("SELECT * FROM auth a JOIN role r ON a.f_id_role=r.id_role WHERE username!='admin';")->result_array();
-		return $data;
-    }
-
-    public function count_user()
-    {
-        $data_user = $this->db->query("SELECT COUNT(*) AS jumlah_user FROM auth WHERE username!='admin'")->row_array();
-        return $data_user['jumlah_user'];
-    }
+   
 }

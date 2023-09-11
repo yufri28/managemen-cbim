@@ -14,7 +14,7 @@ class Auth extends CI_Controller {
 			redirect(base_url('home'));
 		}
 
-		echo $this->session->userdata('kode_role');
+		// echo $this->session->userdata('kode_role');
 
 	}
 	public function index()
@@ -32,6 +32,7 @@ class Auth extends CI_Controller {
 				$data_session = array(
 					'id_auth'	=> $user['id_auth'],
 					'username'	=> $user['username'],
+					'id_role'  => $kode_role['id_role'],
 					'kode_role'	=> $kode_role['kode_role']
 				);
 				$this->session->set_userdata($data_session);

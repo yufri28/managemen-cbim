@@ -111,19 +111,29 @@ $(document).ready(function() {
         var id_sub = $(this).data("id");
         var listItem = $(this).closest(
             "div");
-        $.ajax({
-            url: "<?= base_url('menu/hapus_sub'); ?>",
-            type: "POST",
-            data: {
-                id_sub: id_sub
-            },
-            success: function(response) {
-                console.log(response);
-                if (response.status === "success") {
-                    listItem.remove();
-                }
-            },
-        });
+
+        setInterval(() => {
+            $.ajax({
+                url: "<?= base_url('menu/hapus_sub'); ?>",
+                type: "POST",
+                datatype: "json",
+                data: {
+                    id_sub: id_sub
+                },
+                success: function(response) {
+                    console.log(response.status)
+                    console.log(response);
+                    if (response.status === "success") {
+                        listItem.remove();
+                        // Memperbarui jumlah notifikasi secara real-time
+                        var currentJumlahNotif = parseInt($("#jumlah_notif")
+                            .text());
+                        var newJumlahNotif = currentJumlahNotif + 1;
+                        $("#jumlah_notif").html(response.total_notif);
+                    }
+                },
+            });
+        }, 2000);
     });
 });
 </script>

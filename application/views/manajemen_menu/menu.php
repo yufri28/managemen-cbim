@@ -394,7 +394,7 @@
             <div class="modal-body">
                 <p>Menu <strong><?= $menu['short_name']; ?></strong> dapat diakses oleh:</p>
                 <ol>
-                    <?php $dataPengguna = $this->db->query("SELECT * FROM man_navbar mn JOIN auth a ON mn.f_id_auth=a.id_auth JOIN role r ON r.id_role=a.f_id_role WHERE mn.f_id_menu='" . $menu['id_menu'] . "'")->result_array(); ?>
+                    <?php $dataPengguna = $this->db->query("SELECT * FROM man_navbar mn JOIN role r ON r.id_role=mn.f_id_role WHERE mn.f_id_menu='" . $menu['id_menu'] . "'")->result_array(); ?>
                     <?php foreach ($dataPengguna as $key => $pengguna): ?>
                     <li>
                         <?= $pengguna['role']; ?>
@@ -443,7 +443,7 @@
 <!--end::Modals-->
 
 <!-- begin::Javascript -->
-<script>
+<!-- <script>
 $(document).ready(function() {
     $(".delete-button").on("click", function() {
         var id_man_nav = $(this).data("id");
@@ -456,15 +456,41 @@ $(document).ready(function() {
                 id_man_nav: id_man_nav
             },
             success: function(response) {
-
                 console.log(response);
                 if (response.status === "success") {
-
                     listItem.remove();
                 }
             },
         });
     });
 });
-</script>
+</script> -->
 <!-- end::Javascript -->
+
+<script>
+$(document).ready(function() {
+    $(".delete-button").on("click", function() {
+        var id_man_nav = $(this).data("id");
+        var listItem = $(this).closest("li");
+        $.ajax({
+            url: "<?= base_url('menu/hapus_akses'); ?>",
+            type: "POST",
+            data: {
+                id_man_nav: id_man_nav
+            },
+            success: function(response) {
+                console.log(response);
+                if (response.status === "success") {
+                    listItem.remove();
+                    // Memperbarui jumlah notifikasi secara real-time
+                    var currentJumlahNotif = parseInt($("#jumlah_notif").text());
+                    var newJumlahNotif = currentJumlahNotif - 1;
+
+                    $("#jumlah_notif").text(newJumlahNotif);
+                }
+
+            },
+        });
+    });
+});
+</script>

@@ -37,6 +37,7 @@
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <!-- end::Sweetalert -->
+
   </head>
   <!--end::Head-->
   <!--begin::Body-->
@@ -3078,7 +3079,7 @@
                                       <!--begin::Drawer toggle-->
                                       <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px"
                                           id="kt_activities_toggle">
-                                          <i class="bi bi-bell fs-2"></i>
+                                          <i class="bi bi-grid fs-2"></i>
                                       </div>
                                       <!--end::Drawer toggle-->
                                   </div>
@@ -3238,18 +3239,28 @@
                                   <!--begin::Notifications-->
                                   <div class="d-flex align-items-center ms-1 ms-lg-3">
                                       <!--begin::Menu- wrapper-->
+                                      <!-- <div class="btn btn-icon btn-active-light-primary position-relative w-30px h-30px w-md-40px h-md-40px"
+                                          data-kt-menu-trigger="click" data-kt-menu-attach="parent"
+                                          data-kt-menu-placement="bottom-end">
+                                          <i class="bi bi-bell fs-2">
+                                          </i>
+                                          <span class="badge fs-5 ms-n4 text-danger"><?=$jumlah_notif;?></span>
+                                      </div> -->
+                                      <!--begin::Menu- wrapper-->
                                       <div class="btn btn-icon btn-active-light-primary position-relative w-30px h-30px w-md-40px h-md-40px"
                                           data-kt-menu-trigger="click" data-kt-menu-attach="parent"
                                           data-kt-menu-placement="bottom-end">
-                                          <i class="bi bi-grid fs-2"></i>
+                                          <i class="bi bi-bell fs-2"></i>
+                                          <span id="jumlah_notif"
+                                              class="badge fs-5 ms-n4 text-danger"><?=$jumlah_notif;?></span>
                                       </div>
+                                      <!--begin::Menu-->
                                       <!--begin::Menu-->
                                       <div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px"
                                           data-kt-menu="true">
                                           <!--begin::Heading-->
-                                          <div class="d-flex flex-column bgi-no-repeat rounded-top" style="
-                            background-image: url('<?=base_url()?>assets/media/misc/pattern-1.jpg');
-                          ">
+                                          <div class="d-flex flex-column bgi-no-repeat rounded-top"
+                                              style="background-image: url('<?=base_url()?>assets/media/misc/pattern-1.jpg');">
                                               <!--begin::Title-->
                                               <h3 class="text-white fw-bold px-9 mt-10 mb-6">
                                                   Notifications
