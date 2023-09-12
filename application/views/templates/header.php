@@ -292,7 +292,7 @@
                       <!--begin::Mobile logo-->
                       <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                           <a href="<?=base_url()?><?=base_url()?>demo6/dist/index.html" class="d-lg-none">
-                              <img alt="Logo" src="<?=base_url()?>assets/media/logos/logo-demo6.svg" class="h-30px" />
+                              <img alt="Logo" src="<?=base_url()?>assets/media/logos/logo-cbim.png" class="h-30px" />
                           </a>
                       </div>
                       <!--end::Mobile logo-->

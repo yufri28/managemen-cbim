@@ -40,7 +40,7 @@
                                 <label for="exampleInputPassword1" class="form-label">Role</label>
                                 <select name="role_user" required class="form-select form-select"
                                     aria-label="Small select example">
-                                    <option selected>-- Pilih Role --</option>
+                                    <option value="">-- Pilih Role --</option>
                                     <?php foreach ($dataRole as $key => $role):?>
                                     <option <?= $user['f_id_role'] == $role['id_role'] ? 'selected':'';?>
                                         value="<?=$role['id_role']?>"><?=$role['role']?></option>

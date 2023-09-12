@@ -243,6 +243,8 @@ class Menu extends CI_Controller {
     {
         $data['dataMenu'] = $this->m_menu->get_menu($this->id_auth);
         $data['dataSubMenu'] = $this->m_menu->sub_by_id($id_sub);
+        $data['jumlah_notif'] = $this->m_data->count_notification();
+        $data['dataNotif'] = $this->m_data->get_notification();
         $this->load->view('./templates/header', $data);
 		$this->load->view('./manajemen_menu/edit_sub_menu');
         $this->load->view('./templates/footer');
