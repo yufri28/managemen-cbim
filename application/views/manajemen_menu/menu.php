@@ -442,31 +442,6 @@
 <!--end::Modal - Select Location-->
 <!--end::Modals-->
 
-<!-- begin::Javascript -->
-<!-- <script>
-$(document).ready(function() {
-    $(".delete-button").on("click", function() {
-        var id_man_nav = $(this).data("id");
-        var listItem = $(this).closest(
-            "li");
-        $.ajax({
-            url: "<?= base_url('menu/hapus_akses'); ?>",
-            type: "POST",
-            data: {
-                id_man_nav: id_man_nav
-            },
-            success: function(response) {
-                console.log(response);
-                if (response.status === "success") {
-                    listItem.remove();
-                }
-            },
-        });
-    });
-});
-</script> -->
-<!-- end::Javascript -->
-
 <script>
 $(document).ready(function() {
     $(".delete-button").on("click", function() {
@@ -482,10 +457,6 @@ $(document).ready(function() {
                 console.log(response);
                 if (response.status === "success") {
                     listItem.remove();
-                    // // Memperbarui jumlah notifikasi secara real-time
-                    // var currentJumlahNotif = parseInt($("#jumlah_notif").text());
-                    // var newJumlahNotif = currentJumlahNotif + 1;
-                    // $("#jumlah_notif").text(newJumlahNotif);
                 }
 
             },

@@ -3257,6 +3257,9 @@
                                               <source
                                                   src="<?=base_url('assets/media/sounds/mixkit-confirmation-tone-2867.wav');?>"
                                                   type="audio/wav">
+                                              <source
+                                                  src="<?=base_url('assets/media/sounds/mixkit-confirmation-tone-2867.mp3');?>"
+                                                  type="audio/mp3">
                                               Browsermu tidak mendukung tag audio, upgrade donk!
                                           </audio>
                                       </div>
